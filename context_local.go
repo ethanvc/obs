@@ -53,7 +53,9 @@ func CreateContextLocal(c context.Context) context.Context {
 	if c == nil {
 		c = context.Background()
 	}
-	return context.WithValue(c, contextKeyContextLocal{}, &contextLocal{})
+	cl := &contextLocal{}
+	cl.kvs = make(map[any]any)
+	return context.WithValue(c, contextKeyContextLocal{}, cl)
 }
 
 func GetContextLocal(c context.Context) *contextLocal {
