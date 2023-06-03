@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/ethanvc/obs"
 	"time"
 )
 
@@ -36,6 +37,6 @@ func GetConfig() *Config {
 	return c
 }
 
-func GetUserFromCache(c context.Context, uid int64) (*User, error) {
+func GetUserFromCache(c context.Context, uid int64) (*User, *obs.Status) {
 	return nil, nil
 }

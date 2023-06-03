@@ -59,5 +59,6 @@ type Error struct {
 }
 
 func (e Error) Error() string {
-	return e.s.GetMsg()
+	buf, _ := json.Marshal(e.s)
+	return string(buf)
 }
