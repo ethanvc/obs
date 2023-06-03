@@ -2,7 +2,6 @@ package obs
 
 import (
 	"context"
-	"strings"
 	"sync"
 	"time"
 )
@@ -47,6 +46,14 @@ func GetSpan(c context.Context) *Span {
 }
 
 func (span *Span) Report(c context.Context, event string) *Span {
+	return span.report(c, LevelInfo, event)
+}
+
+func (span *Span) ReportErr(c context.Context, event string) *Span {
+	return span.report(c, LevelErr, event)
+}
+
+func (span *Span) report(c context.Context, lvl Level, event string) *Span {
 	if span == nil {
 		return nil
 	}
@@ -54,11 +61,4 @@ func (span *Span) Report(c context.Context, event string) *Span {
 	span.events = append(span.events, event)
 	span.mux.Unlock()
 	return span
-}
-
-func (span *Span) ReportErr(c context.Context, event string) *Span {
-	if !strings.HasPrefix(event, "Err") {
-		event = "Err" + event
-	}
-	return span.Report(c, event)
 }
